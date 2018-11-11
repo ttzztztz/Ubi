@@ -315,6 +315,7 @@ function touch_inside_move(event) {
     let touch = event.touches[0];
     touch_inside_endX = touch.clientX;
     touch_inside_moveX = touch_inside_startX - touch_inside_endX;
+    let delta = parseInt(touch_inside_transform) + touch_px_to_vw(touch_inside_moveX * -1.0);
     if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) >= 50) {
         // <---o
         touch_inside_move_from_right_to_left();
@@ -322,7 +323,7 @@ function touch_inside_move(event) {
         // o--->
         touch_inside_move_from_left_to_right();
     }
-    jtouch_inside.style.transform = "translate3d(" + (parseInt(touch_inside_transform) + touch_px_to_vw(touch_inside_moveX * -1.0)) + "vw,0px,0px)";
+    jtouch_inside.style.transform = "translate3d(" + delta + "vw,0px,0px)";
 }
 
 let mouse_inside_down = 0;
@@ -340,6 +341,7 @@ function mouse_inside_move(event) {
     if (!mouse_inside_down) return false;
     touch_inside_endX = event.clientX;
     touch_inside_moveX = touch_inside_startX - touch_inside_endX;
+    let delta = parseInt(touch_inside_transform) + touch_px_to_vw(touch_inside_moveX * -1.0);
     if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) >= 50) {
         // <---o
         touch_inside_move_from_right_to_left();
@@ -347,7 +349,7 @@ function mouse_inside_move(event) {
         // o--->
         touch_inside_move_from_left_to_right();
     }
-    jtouch_inside.style.transform = "translate3d(" + (parseInt(touch_inside_transform) + touch_px_to_vw(touch_inside_moveX * -1.0)) + "vw,0px,0px)";
+    jtouch_inside.style.transform = "translate3d(" + delta + "vw,0px,0px)";
     event.preventDefault();
 }
 
@@ -487,6 +489,7 @@ function touch_trending_move(event) {
     let touch = event.touches[0];
     touch_trending_endX = touch.clientX;
     touch_trending_moveX = touch_trending_startX - touch_trending_endX;
+    let delta = parseInt(touch_trending_transform) + touch_px_to_vw(touch_trending_moveX * -1.0);
     if (touch_px_to_vw(touch_trending_moveX - touch_trending_last_moveX) >= 50) {
         // <---o
         touch_trending_move_from_right_to_left();
@@ -494,7 +497,7 @@ function touch_trending_move(event) {
         // o--->
         touch_trending_move_from_left_to_right();
     }
-    jtouch_trending.style.transform = "translate3d(" + (parseInt(touch_trending_transform) + touch_px_to_vw(touch_trending_moveX * -1.0)) + "vw,0px,0px)";
+    jtouch_trending.style.transform = "translate3d(" + delta + "vw,0px,0px)";
 }
 
 let mouse_trending_down = 0;
@@ -512,6 +515,7 @@ function mouse_trending_move(event) {
     if (!mouse_trending_down) return false;
     touch_trending_endX = event.clientX;
     touch_trending_moveX = touch_trending_startX - touch_trending_endX;
+    let delta = parseInt(touch_trending_transform) + touch_px_to_vw(touch_trending_moveX * -1.0);
     if (touch_px_to_vw(touch_trending_moveX - touch_trending_last_moveX) >= 50) {
         // <---o
         touch_trending_move_from_right_to_left();
@@ -519,7 +523,7 @@ function mouse_trending_move(event) {
         // o--->
         touch_trending_move_from_left_to_right();
     }
-    jtouch_trending.style.transform = "translate3d(" + (parseInt(touch_trending_transform) + touch_px_to_vw(touch_trending_moveX * -1.0)) + "vw,0px,0px)";
+    jtouch_trending.style.transform = "translate3d(" + delta + "vw,0px,0px)";
     event.preventDefault();
 }
 
