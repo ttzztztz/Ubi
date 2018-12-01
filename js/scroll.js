@@ -316,12 +316,18 @@ function touch_inside_move(event) {
     touch_inside_endX = touch.clientX;
     touch_inside_moveX = touch_inside_startX - touch_inside_endX;
     let delta = parseInt(touch_inside_transform) + touch_px_to_vw(touch_inside_moveX * -1.0);
-    if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) >= 50) {
+    let delta_abs = Math.abs(delta);
+    if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) > 0) {
         // <---o
-        touch_inside_move_from_right_to_left();
-    } else if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) <= -50) {
+        if(touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) >= 50){
+            touch_inside_move_from_right_to_left();
+        }
+
+    } else if (touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) < 0) {
         // o--->
-        touch_inside_move_from_left_to_right();
+        if(touch_px_to_vw(touch_inside_moveX - touch_inside_last_moveX) <= -50){
+            touch_inside_move_from_left_to_right();
+        }
     }
     jtouch_inside.style.transform = "translate3d(" + delta + "vw,0px,0px)";
 }

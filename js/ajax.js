@@ -28,15 +28,21 @@ let ajax_mobile_nav = document.getElementById("news_nav_mobile");
 
 let ajax_all = document.querySelector("li.news_nav_container_li_active[data-id='0']");
 let ajax_focus = -1;
-let ajax_cache = ["", "", "", "", ""];
+const ajax_cache_default = ["", "", "", "", ""];
+let ajax_cache = ajax_cache_default;
+let ajax_time = time();
 let ajax_dom_count = 0;
+
+function time() {
+    return new Date().getTime();
+}
 
 function ajax_post(url, data, fn, _focus_id) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 304)) {
+        if (xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)) {
             ajax_cache[_focus_id] = xhr.responseText;
             fn.call(this, xhr.responseText);
         }
@@ -60,18 +66,23 @@ function setFocus(event) {
 }
 
 function ajax_begin(_focus_id, _active) {
-    if (_focus_id === undefined || _focus_id == ajax_focus) return;
+    if (_focus_id === undefined || _focus_id === ajax_focus) return;
     ajax_doing = 1;
     let focus_last = document.querySelector(".news_nav_container_li[data-id='" + ajax_focus + "']");
     let focus_now = document.querySelector(".news_nav_container_li[data-id='" + _focus_id + "']");
-    if (ajax_focus != -1)
+    if (ajax_focus !== -1)
         focus_last.classList.remove("news_nav_container_li_active");
     focus_now.classList.add("news_nav_container_li_active");
     ajax_focus = _focus_id;
     ajax_container.style.opacity = 0.6;
     let postdata = ajax_post_example;
-    if (ajax_cache[_focus_id] == "" || ajax_cache[_focus_id] === undefined) {
-        if (_active != "all") {
+    let now_time = time();
+    if (now_time - ajax_time >= 60 * 60 * 1000) {
+        ajax_cache = ajax_cache_default;
+        ajax_time = now_time;
+    }
+    if (ajax_cache[_focus_id] === "" || ajax_cache[_focus_id] === undefined) {
+        if (_active !== "all") {
             postdata.keyword = _active;
         } else {
             postdata = ajax_post_all;
